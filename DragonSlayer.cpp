@@ -1,11 +1,20 @@
 #include "DragonSlayer.h"
 #include "Dragon.h"
+#include "Utility.h"
 
 //DragonSlayer::DragonSlayer
+DragonSlayer::DragonSlayer (std::string name_, int hp, int armor_, int attackDamage_ ) :
+    Character (hp, armor_, attackDamage_ ),
+    name{name_}
+{}
 
 //DragonSlayer::getName
+const std::string& DragonSlayer::getName()
+{
+    return name;
+}
 
-void DragonSlayer::attack(Character& other)
+void DragonSlayer::attack (Character& other)
 {
     std::cout << name << " is attacking " << other.getName() << " !!" << std::endl;
     if( auto* dragon = dynamic_cast<Dragon*>(&other) )
@@ -27,3 +36,7 @@ void DragonSlayer::attack(Character& other)
 }
 
 //DragonSlayer::getStats
+std::string DragonSlayer::getStats()
+{
+    return getCharacterStats(this);
+}
