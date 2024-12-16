@@ -3,8 +3,8 @@
 
 struct Character;
 
-void AttackItem::use(Character* character)
+void AttackItem::use (Character* character)
 {
     //make your defensive item use the appropriate Utility helper functions
-    useAttackItem(character, this);
+    useAttackItem (character, this);
 }

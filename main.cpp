@@ -86,20 +86,20 @@ int main()
     std::cout << "\nstart of battle" << std::endl;
 
     paladin.defend();
-    dragon.attack( paladin );
-    dwarf.attack( dragon );
-    paladin.attack( dragon ); //can't, he's dead
+    dragon.attack ( paladin );
+    dwarf.attack ( dragon );
+    paladin.attack ( dragon ); //can't, he's dead
     
-    dragonSlayer.help( paladin ); //now he's not dead
-    paladin.attack( dragon ); //he's alive now.
-    dragon.attack( dwarf ); //dwarf is dead
-    paladin.help(dwarf); //dwarf is alive now.
+    dragonSlayer.help ( paladin ); //now he's not dead
+    paladin.attack ( dragon ); //he's alive now.
+    dragon.attack ( dwarf ); //dwarf is dead
+    paladin.help (dwarf); //dwarf is alive now.
     
-    dragon.attack( dragonSlayer ); //he dodges
-    dragonSlayer.attack( dragon ); //dragon is slayed.
+    dragon.attack ( dragonSlayer ); //he dodges
+    dragonSlayer.attack ( dragon ); //dragon is slayed.
     //the dragon slayer has no friends and kills everyone 
-    dragonSlayer.attack( paladin );
-    dragonSlayer.attack( dwarf ); 
+    dragonSlayer.attack ( paladin );
+    dragonSlayer.attack ( dwarf ); 
     
     std::cout << std::endl << "end of battle stats:" << std::endl;
     

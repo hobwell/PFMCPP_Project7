@@ -8,8 +8,8 @@ DragonSlayer::DragonSlayer (std::string name_, int hp, int armor_, int attackDam
     attackItem{new AttackItem()},
     name{name_}
 {
-    defensiveItems = makeDefensiveItems(0);
-    helpfulItems = makeHelpfulItems(0);
+    defensiveItems = makeDefensiveItems (0);
+    helpfulItems = makeHelpfulItems (0);
 }
 
 //DragonSlayer::getName
@@ -21,7 +21,7 @@ const std::string& DragonSlayer::getName()
 void DragonSlayer::attack (Character& other)
 {
     std::cout << name << " is attacking " << other.getName() << " !!" << std::endl;
-    if( auto* dragon = dynamic_cast<Dragon*>(&other) )
+    if( auto* dragon = dynamic_cast<Dragon*> (&other) )
     {
         //DragonSlayers get a 10x boost when attacking dragons, from their attack item.
         //so they should USE their attack item before attacking the dragon... 
@@ -32,7 +32,7 @@ void DragonSlayer::attack (Character& other)
         {
             if (attackItem.get())
             {
-                attackItem->use(this);
+                attackItem->use (this);
                 attackItem.reset(); //can only be used once!
             }    
         }
@@ -50,5 +50,5 @@ void DragonSlayer::attack (Character& other)
 //DragonSlayer::getStats
 std::string DragonSlayer::getStats()
 {
-    return getCharacterStats(this);
+    return getCharacterStats (this);
 }
