@@ -52,6 +52,8 @@ struct Character
         std::cout << getName() << "'s attack damage level has been boosted to " << attackDamage << std::endl;
     }
 
+    void levelUpStat(int& stat, int* baseStat, float multiplier = 1.1f);
+
     void printStats();
 
 protected:
@@ -59,8 +61,7 @@ protected:
     std::vector<std::unique_ptr<Item>> helpfulItems;
     int hitPoints, armor;
     int attackDamage;
-    bool isDefending = false;
-
+    bool isDefending = false;    
 private:
     std::unique_ptr<int> initialHitPoints, initialArmorLevel, initialAttackDamage;
     
