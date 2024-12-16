@@ -60,7 +60,7 @@ void Character::help (Character& other)
     }
 }
 
-void Character::levelUpStat(int& stat, int* baseStat, float multiplier)
+void Character::levelUpStat (int& stat, int* baseStat, float multiplier)
 {
     if (stat < *baseStat) stat = *baseStat;
 
