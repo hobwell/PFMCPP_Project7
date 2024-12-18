@@ -1,15 +1,14 @@
 #pragma once
 
-#include <string>
 #include <vector>
 #include <memory>
 #include <iostream>
 
-#include "Item.h"
+struct Item;
 
 struct Character
 {
-    Character(int hp, int armor_, int attackDamage_ );
+    Character (int hp, int armor_, int attackDamage_ );
     virtual ~Character() { }
     
     /*
@@ -20,12 +19,12 @@ struct Character
     virtual const std::string& getName() = 0;
     virtual std::string getStats() = 0;
     
-    virtual void attack( Character& other );
+    virtual void attack ( Character& other );
     void defend();
     
-    void help( Character& other );
+    void help ( Character& other );
     
-    int takeDamage(int damage);
+    int takeDamage (int damage);
     
     int getHP() const { return hitPoints; }
     int getArmorLevel() const { return armor; }
@@ -35,40 +34,36 @@ struct Character
     const std::vector<std::unique_ptr<Item>>& getHelpfulItems() const { return helpfulItems; }
     const std::vector<std::unique_ptr<Item>>& getDefensiveItems() const { return defensiveItems; }
     
-    void boostArmor( int amount )
+    void boostArmor ( int amount )
     {
         armor += amount;
         std::cout << getName() << "'s armor level has been boosted to " << armor << std::endl;
     }
     
-    void boostHitPoints( int amount )
+    void boostHitPoints ( int amount )
     {
         hitPoints += amount;
         std::cout << getName() << "'s hit point level has been boosted to " << hitPoints << std::endl;
     }
     
-    void boostAttackDamage( int amount )
+    void boostAttackDamage ( int amount )
     {
         attackDamage += amount;
         std::cout << getName() << "'s attack damage level has been boosted to " << attackDamage << std::endl;
     }
 
-    void printStats()
-    {
-        std::cout << getName() << "'s stats: " << std::endl;
-        std::cout << getStats(); //make your getStats() use a function from the Utility.h
-        
-        std::cout << std::endl;
-        std::cout << std::endl;
-    }
+    void levelUpStat (int& stat, int* baseStat, float multiplier = 1.1f);
+
+    void printStats();
+
 protected:
     std::vector<std::unique_ptr<Item>> defensiveItems;
     std::vector<std::unique_ptr<Item>> helpfulItems;
     int hitPoints, armor;
     int attackDamage;
-    bool isDefending = false;
+    bool isDefending = false;    
 private:
     std::unique_ptr<int> initialHitPoints, initialArmorLevel, initialAttackDamage;
     
-    void attackInternal(Character& other);
+    void attackInternal (Character& other);
 };

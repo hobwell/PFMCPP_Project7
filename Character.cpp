@@ -1,23 +1,20 @@
 #include "Character.h"
-#include <iostream>
-#include <vector>
-
 #include "DefensiveItem.h"
 #include "HelpfulItem.h"
 
-Character::Character(int hp, int armor_, int attackDamage_ ) :
-    hitPoints(hp),
-    armor(armor_),
-    attackDamage(attackDamage_)
+Character::Character (int hp, int armor_, int attackDamage_ ) :
+    hitPoints (hp),
+    armor (armor_),
+    attackDamage (attackDamage_)
 {
-    initialHitPoints.reset( new int(hitPoints) );
-    initialArmorLevel.reset( new int( armor) );
-    initialAttackDamage.reset( new int( attackDamage) );
+    initialHitPoints.reset ( new int (hitPoints) );
+    initialArmorLevel.reset ( new int ( armor) );
+    initialAttackDamage.reset ( new int ( attackDamage) );
 }
 
-void Character::attack( Character& other )
+void Character::attack ( Character& other )
 {
-    if( hitPoints <= 0 )
+    if ( hitPoints <= 0 )
     {
         std::cout << getName() << " can't attack. " << getName() << " is dead." << std::endl;
         std::cout << "make another party member use an item to revive them" << std::endl << std::endl;
@@ -27,10 +24,10 @@ void Character::attack( Character& other )
     isDefending = false;
     std::cout << getName() << " has attacked " << other.getName() << std::endl;
     
-    if( other.takeDamage(attackDamage) <= 0 ) 
+    if( other.takeDamage (attackDamage) <= 0 ) 
     {
         //if you kill other, you get a boost in hit points and armor.
-        attackInternal(other);
+        attackInternal (other);
     }
 }
 
@@ -39,9 +36,9 @@ void Character::defend()
     std::cout << getName() << " is defending!!" << std::endl;
     for( auto& item : defensiveItems )
     {
-        if( auto* defensiveItem = dynamic_cast<DefensiveItem*>(item.get()) )
+        if( auto* defensiveItem = dynamic_cast<DefensiveItem*> (item.get()) )
         {
-            defensiveItem->use(this);
+            defensiveItem->use (this);
             item.reset(); //can only be used once!
             break;
         }
@@ -49,24 +46,32 @@ void Character::defend()
     isDefending = true;
 }
 
-void Character::help(Character& other)
+void Character::help (Character& other)
 {
     std::cout << getName() << " is going to help " << other.getName() << std::endl;
-    for( auto& item : helpfulItems )
+    for ( auto& item : helpfulItems )
     {
-        if( auto* helpfulItem = dynamic_cast<HelpfulItem*>(item.get()) )
+        if ( auto* helpfulItem = dynamic_cast<HelpfulItem*> (item.get()) )
         {
-            helpfulItem->use(&other);
+            helpfulItem->use (&other);
             item.reset(); //can only be used once!
             break;
         }
     }
 }
 
-int Character::takeDamage(int damage)
+void Character::levelUpStat (int& stat, int* baseStat, float multiplier)
+{
+    if (stat < *baseStat) stat = *baseStat;
+
+    stat *= multiplier;    
+    *baseStat = stat;
+}
+
+int Character::takeDamage (int damage)
 {
     std::cout << getName() << " is taking " << damage << " damage!" << std::endl;
-    if( damage < armor )
+    if ( damage < armor )
     {
         armor -= damage;
     }
@@ -76,7 +81,7 @@ int Character::takeDamage(int damage)
         armor = 0;
         
         hitPoints -= damage;
-        if( hitPoints < 0 )
+        if ( hitPoints < 0 )
         {
             std::cout << getName() << " has died in battle!" << std::endl;
             hitPoints = 0;
@@ -88,9 +93,9 @@ int Character::takeDamage(int damage)
 
 
 #include <cassert>
-void Character::attackInternal(Character& other)
+void Character::attackInternal (Character& other)
 {
-    if( other.hitPoints <= 0 )
+    if ( other.hitPoints <= 0 )
     {
         /*
         When you defeat another Character: 
@@ -98,7 +103,10 @@ void Character::attackInternal(Character& other)
             b) your stats are boosted 10%
             c) the initial value of your stats is updated to reflect this boosted stat for the next time you defeat another character.
       */
-        assert(false);
+        levelUpStat(hitPoints, initialHitPoints.get());
+        levelUpStat(armor, initialArmorLevel.get());
+        levelUpStat(attackDamage, initialAttackDamage.get());
+        
         std::cout << getName() << " defeated " << other.getName() << " and leveled up!" << std::endl;        
     }
 }
@@ -106,7 +114,6 @@ void Character::attackInternal(Character& other)
 void Character::printStats()
 {
     std::cout << getName() << "'s stats: " << std::endl;
-    assert(false);
     /*
     make your getStats() use a function from the Utility.h
     */
