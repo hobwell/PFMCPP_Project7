@@ -52,7 +52,7 @@ struct Character
         std::cout << getName() << "'s attack damage level has been boosted to " << attackDamage << std::endl;
     }
 
-    void levelUpStat (int& stat, int* baseStat, float multiplier = 1.1f);
+    void levelUpStat (int& stat, int& baseStat, float multiplier = 1.1f);
 
     void printStats();
 
